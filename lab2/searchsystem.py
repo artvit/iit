@@ -17,7 +17,6 @@ split_words = '[^a-zA-Z]'
 
 def get_files_list(path):
     files = []
-    # r=root, d=directories, f = files
     for r, d, f in os.walk(path):
         for file in f:
             if '.av' in file:
@@ -56,14 +55,15 @@ class SearchSystem:
 
     def build_system(self, folder):
         files = get_files_list(folder)
-        trees = [Parser().parse_file(file) for file in files]
+        trees = []
+        for file in files:
+            with open(file, encoding='utf8') as f:
+                trees.append(Parser().parse_file(f))
         for f, t in zip(files, trees):
             self.files[f] = t
 
         self.parse_docs()
         self.create_all_words_set()
-        self.init_dict(self.idf)
-        self.init_dict(self.tf)
         self.create_tf_index()
         self.create_idf_index()
         self.create_tf_idf_index()
@@ -103,6 +103,7 @@ class SearchSystem:
         self.avg_len = avg_len / len(self.docs)
 
     def create_tf_index(self):
+        self.init_dict(self.tf)
         for file, words in self.docs.items():
             annotations_part = words[annotations_label]
             annotations = annotations_part['words']
@@ -126,6 +127,7 @@ class SearchSystem:
                 self.tf[file][term] += main_text_coef * main_text.count(term) / doc_len
 
     def create_idf_index(self):
+        self.init_dict(self.idf)
         len_docs = len(self.tf)
 
         for word in self.all_words:
@@ -138,9 +140,10 @@ class SearchSystem:
             self.idf[word] = math.log(len_docs / occurrence_in_docs) if occurrence_in_docs else 0
 
     def create_tf_idf_index(self):
-        for name, words in self.tf.items():
+        self.init_dict(self.tf_idf)
+        for file, words in self.tf.items():
             for word in words:
-                self.tf_idf[name][word] = self.tf[name][word] * self.idf[word]
+                self.tf_idf[file][word] = self.tf[file][word] * self.idf[word]
 
     def init_dict(self, d):
         for name in self.docs:
