@@ -75,13 +75,13 @@ def find_closing_tag_pos(subcontent, tag_name):
     return r_idx - len(close_tag)
 
 
-def test():
-    parser = Parser()
-    result = parser.parse_to_tree('{t}ssssss{t}iiiii{-t}eeee{-t}bbbbb{t}lllll{-t}')
-    # result = find_closing_tag_pos('ssssss{t}ssssss{-t}sssss{-t}sss{t}sssss{-t}', 't')
-    print(result)
-
-
-if __name__ == '__main__':
-    test()
+# def test():
+#     parser = Parser()
+#     result = parser.parse_to_tree('{t}ssssss{t}iiiii{-t}eeee{-t}bbbbb{t}lllll{-t}')
+#     # result = find_closing_tag_pos('ssssss{t}ssssss{-t}sssss{-t}sss{t}sssss{-t}', 't')
+#     print(result)
+#
+#
+# if __name__ == '__main__':
+#     test()
 
