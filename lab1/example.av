@@ -1,0 +1,19 @@
+{doc}
+    {title}Example page{-title}
+    {heading}Main features demo{-heading}
+    {link}text for link|linkaddr.html{-link}
+    {block}Text in block. Text can be {bt}big{-bt} {it}italic{-it} and {ut}underlined{-ut} {-block}
+    {block}
+        Block with text and lists inside
+        {mlist}
+            {item}Marker{-item}
+            {item}list{-item}
+        {-mlist}
+
+        {nlist}
+            {item}Numbered{-item}
+            {item}list{-item}
+        {-nlist}
+    {-block}
+    {block} block with \{ \} \{}{-block}
+{-doc}
